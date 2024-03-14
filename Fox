@@ -1,4 +1,4 @@
-package fox;
+package Fox;
 
 
 import robocode.*;//importação do robocode
@@ -10,7 +10,7 @@ import robocode.ScannedRobotEvent;
 import robocode.WinEvent;
 import robocode.HitWallEvent;
 
-public class fox extends AdvancedRobot {
+public class Fox extends AdvancedRobot {
 	boolean movingForward;
 	boolean inWall; 
 	
