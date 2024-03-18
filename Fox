@@ -12,56 +12,39 @@ import robocode.HitWallEvent;
 
 public class Fox extends AdvancedRobot {
 	boolean movingForward;
-	boolean inWall; 
+	boolean inWall;
+	boolean peek;
+	double moveAmount;	
 	
 	public void run() {
-		// Set colors
-		setColors(Color.gray,Color.black,Color.orange,Color.orange,Color.green);
-		setMaxVelocity(1000); //Acabou não fazendo nada
 
-		// Torna cada elemento do robo independente
+		setColors(Color.gray,Color.black,Color.orange,Color.orange,Color.green);
 		setAdjustRadarForRobotTurn(true);
 		setAdjustGunForRobotTurn(true);
 		setAdjustRadarForGunTurn(true);
 		
-		if (getX() <= 50 || getY() <= 50 || getBattleFieldWidth() - getX() <= 50 || getBattleFieldHeight() - getY() <= 50) {
-				inWall = true;
-			} else {
-			inWall = false;
-		}
-		boolean peek; // Nao virar se houver um robo ali
-	double moveAmount; // O quanto se mover	
-	
 
-		// Colocar moveAmount para o maximo possivel do campo
 		moveAmount = Math.max(getBattleFieldWidth(), getBattleFieldHeight());
-		// Colocar peek como falso
-		peek = false;
-
-		// turnLeft para encarar parede.
-		// getHeading() % 90 quer dizer o restante
-		// getHeading() dividido por 90
+		if (getRadarTurnRemaining() == 0.0){
+			setTurnRadarRight(360);
+		}
+		peek = true;
 		turnLeft(getHeading() % 90);
 		ahead(moveAmount);
-		// Virar a arma 90 graus pra direita
-		peek = true;
 		turnGunRight(90);
 		turnRight(90);
 
 		while (true) {
-			// Olhar antes de virar quando ahead() completar
 			peek = true;
-			// Ir pra parede
 			ahead(moveAmount);
-			// Não procurar inimigo agora
-			peek = false;
-			// Virar pra próxima parede
+			peek = true;
 			turnRight(90);
 			if (getRadarTurnRemaining() == 0.0){
 			setTurnRadarRight(360);
 			}
 		}
 	}
+
 
 	public void onScannedRobot(ScannedRobotEvent e) {
 		// localização do inimigo
@@ -81,4 +64,4 @@ public class Fox extends AdvancedRobot {
 			setTurnRadarRight(bearingFromRadar);
 		}
 	}
-}	
+}
