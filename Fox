@@ -23,28 +23,34 @@ public class Fox extends AdvancedRobot {
 		setAdjustGunForRobotTurn(true);
 		setAdjustRadarForGunTurn(true);
 		
-
+		
 		moveAmount = Math.max(getBattleFieldWidth(), getBattleFieldHeight());
-		if (getRadarTurnRemaining() == 0.0){
-			setTurnRadarRight(360);
-		}
-		peek = true;
+		peek = false;
 		turnLeft(getHeading() % 90);
+		if (getRadarTurnRemaining() == 0.0){
+			setTurnRadarRight(180);
+			}
 		ahead(moveAmount);
-		turnGunRight(90);
-		turnRight(90);
+		peek = true;
+		turnGunLeft(90);
+		turnLeft(90);
 
 		while (true) {
 			peek = true;
 			ahead(moveAmount);
-			peek = true;
-			turnRight(90);
+			peek = false;
+			turnLeft(90);
 			if (getRadarTurnRemaining() == 0.0){
-			setTurnRadarRight(360);
+			setTurnRadarRight(180);
 			}
 		}
 	}
 
+	public void onRobotDeath(RobotDeathEvent event) {
+	    if (getRadarTurnRemaining() == 0.0){
+			setTurnRadarRight(180);
+			}
+	}
 
 	public void onScannedRobot(ScannedRobotEvent e) {
 		// localização do inimigo
